@@ -44,7 +44,7 @@ const Categories = () => {
         material
       </div>
 
-      <div className={styles.categoriesContainer}>
+      <div className={styles.categoriesContainer} >
         {categories.map((item) => (
           <div className={styles.categoryContainer}>
             <div

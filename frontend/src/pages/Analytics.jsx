@@ -1,21 +1,30 @@
-import React from 'react'
-import LineGraph from '../components/LineGraph'
-//import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-function Analytics() {
-  return (<>
-    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DatePicker']}>
-        <DatePicker label="Basic date picker" />
-      </DemoContainer>
-    </LocalizationProvider> */}
+import React, { useState } from "react";   
+import LineGraph from '../components/LineGraph';
 
+
+function Analytics() {
+
+  const current = new Date();
+  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+  const myData = {
+    type : "weekly-daily",
+    date : date
+  };
+  const myFunc = async () => {  
+  
+  const result = await fetch ('http://localhost:8000/',{
+  method : 'POST',
+  'Content-Type' : 'application/json',
+ 
+  })
+body: JSON.Stringify(data)
+}
+console.log(myData);
+  return(
     <div>
          <LineGraph/>
     </div>
-    </>
+   
     
   )
 }

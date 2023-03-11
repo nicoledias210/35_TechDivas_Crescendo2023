@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 import DownloadIcon from '@mui/icons-material/Download';
+import Button from '@mui/material/Button';
 
 const thumbsContainer = {
   display: 'flex',
@@ -26,7 +27,7 @@ const thumbInner = {
 const img = {
   display: 'block',
   width: 'auto',
-  height: '100%'
+  height: '30'
 };
 
 
@@ -41,6 +42,7 @@ function ImageUpload(props) {
         preview: URL.createObjectURL(file)
       })));
     }
+    
   });
 
   const dropboxStyle = {
@@ -82,7 +84,7 @@ function ImageUpload(props) {
         {thumbs}
       </aside>
       
-     
+      <Button variant="contained">Submit</Button>
     </section>
   );
 }

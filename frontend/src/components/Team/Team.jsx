@@ -3,19 +3,19 @@ import styles from "./Team.module.css";
 
 const members = [
   {
-    name: "Nicole",
+    name: "Nicole Dias",
     image: "dummy",
   },
   {
-    name: "Nicole",
+    name: "Alisha Rao",
     image: "dummy",
   },
   {
-    name: "Nicole",
+    name: "Vanessa D'Mello",
     image: "dummy",
   },
   {
-    name: "Nicole",
+    name: "Shruti Shetty",
     image: "dummy",
   },
 ];
