@@ -5,6 +5,7 @@ import Auth from './pages/Auth'
 import Analytics from './pages/Analytics'
 import {Routes, Route } from 'react-router-dom';
 import About from './pages/About';
+import WebcamData from "./pages/LiveWebCam";
 import Metal from './components/Metal';
 import Plastic from './components/Plastic';
 import Paper from './components/Paper';
@@ -47,6 +48,7 @@ function App() {
      <Route path = "/Waste/Cardboard" element = {<Cardboard />} />
      <Route path = "/Waste/Glass" element = {<Glass/>} />
      <Route path = "/Waste/Trash" element = {<Trash/>} />
+     <Route path = "/Webcam" element={<WebcamData />} />
     
 
      </Routes>
@@ -55,5 +57,5 @@ function App() {
 
   );
 }
-  
+
 export default App;
