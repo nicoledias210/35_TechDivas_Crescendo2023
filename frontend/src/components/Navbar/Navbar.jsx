@@ -7,36 +7,36 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const [scrollPercentage, setScrollPercentage] = useState(0);
 
-  //useEffect(() => {
-//     const updateScrollPercentage = () => {
-//       const windowHeight = window.innerHeight;
-//       const documentHeight = document.documentElement.scrollHeight;
-//       const scrollTop =
-//         window.pageYOffset || document.documentElement.scrollTop;
-//       const scrollDistance = documentHeight - windowHeight;
-//       const scrollPercentage = Math.min(scrollTop / scrollDistance, 1) * 100;
+  useEffect(() => {
+    const updateScrollPercentage = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const scrollDistance = documentHeight - windowHeight;
+      const scrollPercentage = Math.min(scrollTop / scrollDistance, 1) * 100;
 
-//       setScrollPercentage(scrollPercentage);
-//     };
+      setScrollPercentage(scrollPercentage);
+    };
 
-//     window.addEventListener("scroll", updateScrollPercentage);
+    window.addEventListener("scroll", updateScrollPercentage);
 
-//     return () => {
-//       window.removeEventListener("scroll", updateScrollPercentage);
-//     };
-//   }, []);
+    return () => {
+      window.removeEventListener("scroll", updateScrollPercentage);
+    };
+  }, []);
 
-//   const scroll = (id) => {
-//     var element = document.getElementById(id);
-//     var headerOffset = 96;
-//     var elementPosition = element.getBoundingClientRect().top;
-//     var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  const scroll = (id) => {
+    var element = document.getElementById(id);
+    var headerOffset = 96;
+    var elementPosition = element.getBoundingClientRect().top;
+    var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-//     window.scrollTo({
-//       top: offsetPosition,
-//       behavior: "smooth",
-//     });
-//   };
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div
@@ -78,3 +78,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
