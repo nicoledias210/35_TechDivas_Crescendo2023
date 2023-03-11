@@ -1,0 +1,4 @@
+Login
+signup
+dashboard
+camera scanning page
