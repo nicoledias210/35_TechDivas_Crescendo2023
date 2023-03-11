@@ -42,19 +42,19 @@ const Navbar = () => {
     <div
       className={styles.container}
       style={{
-        background: scrollPercentage > 0 ? "white" : "none",
-        color: scrollPercentage > 0 ? "black" : "white",
-        boxShadow: scrollPercentage === 0 && "none",
+        background: "white" ,
+        color: "black",
+        // boxShadow: scrollPercentage === 0 && "none",
       }}
     >
       <h1
-        className={styles.logo}
-        onClick={() => scroll("hero")}
-        style={{
-          color: scrollPercentage > 0 ? "#048a52" : "white",
-        }}
+        // className={styles.logo}
+        // onClick={() => scroll("hero")}
+        // style={{
+        //   color: "#048a52",
+        // }}
       >
-        NICOLE
+        IRecycle
       </h1>
       <div className={styles.subContainer}>
         <p onClick={() => scroll("categories")}>Categories</p>
@@ -78,3 +78,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

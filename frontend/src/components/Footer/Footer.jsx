@@ -4,7 +4,7 @@ import styles from "./Footer.module.css";
 const Footer = () => {
   return (
     <div className={styles.container}>
-      <h1>NICOLE</h1>
+      <h1>IRecycle</h1>
       <p className={styles.subTitle}>Turning the world's waste into resource</p>
 
       <div className={styles.copywriteContainer}>
@@ -18,3 +18,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
