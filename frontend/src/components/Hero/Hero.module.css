@@ -1,0 +1,56 @@
+.container {
+    background-color: rgb(0, 0, 0, 0.6);
+    color: white;
+    height: 610px;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .mainText {
+    font-size: 54px;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 24px;
+  }
+  .subText {
+    font-size: 21px;
+  }
+  
+  .buttons {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 40px;
+  }
+  .buttons button {
+    padding: 15px 32px;
+    width: 200px;
+    font-size: 14px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .buttons button:hover {
+    transform: translate(0, -5px);
+  }
+  
+  .video {
+    width: 100vw;
+    height: 610px;
+    object-fit: cover;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+  

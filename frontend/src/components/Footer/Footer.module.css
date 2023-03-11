@@ -1,0 +1,24 @@
+.container {
+    padding-top: 120px;
+  }
+  
+  .container h1 {
+    color: var(--primary);
+    margin: 0;
+    font-size: 64px;
+  }
+  
+  .subTitle {
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  .copywriteContainer {
+    margin-top: 80px;
+    display: flex;
+    background-color: var(--primary);
+    color: #fff;
+    justify-content: space-between;
+    padding: 10px 80px;
+  }
+  
