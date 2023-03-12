@@ -42,9 +42,9 @@ const Navbar = () => {
     <div
       className={styles.container}
       style={{
-        background: "white" ,
-        color: "black",
-        // boxShadow: scrollPercentage === 0 && "none",
+        background: scrollPercentage > 0 ? "white" : "none" ,
+        color: scrollPercentage > 0 ? "black" : "white",
+        boxShadow: scrollPercentage === 0 && "none",
       }}
     >
       <h1
@@ -60,16 +60,16 @@ const Navbar = () => {
         <p onClick={() => scroll("categories")}>Categories</p>
         <p onClick={() => scroll("teams")}>Our Team</p>
         <p>
-        {/* <Link to="/Analytics"/> */}
+        <Link to="/Analytics"/>
           Analytics
         </p>
         <p>
-        {/* <Link to="/Report"/> */}
+        <Link to="/Report"/>
           Report
         </p>
 
         <p>
-        {/* <Link to="/Auth "/> */}
+        <Link to="/Auth "/>
           Login
         </p>
       </div>

@@ -1,7 +1,10 @@
 #root {
-  
   text-align: center;
   font-family: Poppins;
   --primary: #048a52;
+}
+
+.MuiGrid-root MuiGrid-container css-r61ugu-MuiGrid-root{
+  background-color:"#42f58a";
 }
 

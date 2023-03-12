@@ -1,4 +1,5 @@
 import React from 'react';
+import Navbar from "./Navbar/Navbar"
 import {
     LineChart,
     ResponsiveContainer,
@@ -79,10 +80,10 @@ import {
       
     function LineGraph() {
         return (
-            <>
+<div>
                 <h1 className="text-heading">
-                    Weekly Analytics
-                </h1>
+                    Weekly Analytics</h1>
+                <Navbar/>
                 <ResponsiveContainer width="100%" aspect={3}>
                     <LineChart data={pdata} margin={{ right: 300 }}>
                         <CartesianGrid />
@@ -104,8 +105,8 @@ import {
                         <Line dataKey="cardboard"
                             stroke="yellow" activeDot={{ r: 8 }} />
                     </LineChart>
-                </ResponsiveContainer>
-            </>
+                </ResponsiveContainer>   
+                </div>
         );
     }
 
