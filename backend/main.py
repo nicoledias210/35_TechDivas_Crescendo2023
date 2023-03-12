@@ -34,11 +34,10 @@ async def index():
     return {"message": 'hello'}
 
 
-# ChatGPT
+# Chatgpt
 @app.get('/recommendation')
-async def chatgpt(category: str):
-    recommend = get_recommendation(category)
-    return {"recommendation": recommend}
+async def get_recommendation_chatgpt(recommend: str):
+    return get_recommendation(recommend)
 
 # POST /register
 @app.post('/register')
@@ -159,7 +158,12 @@ def getuserwaste(request: userWasteModels.UserWasteResults):
             for key, val in record.items():
                 if key == "_id":
                     record["_id"] = str(record["_id"])
+                   
+
                 result.append(record)
+
+        #print(result)
+
         return result
 
 
