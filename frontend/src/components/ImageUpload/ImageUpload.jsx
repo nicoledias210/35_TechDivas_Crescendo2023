@@ -26,7 +26,7 @@ const thumb = {
 const img = {
 	display: "block",
 	width: "640px",
-	marginLeft: "470px",
+	marginLeft: "400px",
 	height: "500px",
 };
 
