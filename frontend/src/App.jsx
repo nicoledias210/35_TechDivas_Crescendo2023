@@ -5,6 +5,7 @@ import Auth from './pages/Auth'
 import Analytics from './pages/Analytics'
 import {Routes, Route } from 'react-router-dom';
 import About from './pages/About';
+import SignIn from './pages/Login';
 import WebcamData from "./pages/LiveWebCam";
 import Metal from './components/Metal';
 import Plastic from './components/Plastic';
@@ -42,6 +43,7 @@ function App() {
      <Route path = "/Report" element = {<Report/>} />
      <Route path = "/Analytics" element = {<Analytics/>} />
      <Route path = "/Auth" element = {<Auth/>} />
+      <Route path ="/Login" element={<SignIn/>}/>
      <Route path = "/Waste/Metal" element = {<Metal />} />
      <Route path = "/Waste/Plastic" element = {<Plastic />} />
      <Route path = "/Waste/Paper" element = {<Paper />} />

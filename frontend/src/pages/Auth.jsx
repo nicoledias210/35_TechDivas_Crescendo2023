@@ -20,52 +20,60 @@ export default function Auth() {
 	const [email, setEmail] = useState('')
 
 	const handleSubmit = (event) => {
-        console.log(username, password, name, email)
+        //console.log(username, password, email)
 		event.preventDefault()
 		if (isSignUp) {
-			if ((username === '' || password === '', repeatPassword === '', name === '', email === '')) {
+			if ((username === '' || password === '', repeatPassword === '', email === '')) {
 				setOpen(true)
 				setError('Fill all the details')
 			} else if (password !== repeatPassword) {
 				setOpen(true)
 				setError("Password don't match")
+			} else {
+					if (username === '' || password === '') {
+						setOpen(true)
+						setError('Fill all the details')
+					}
 			}
-
-			axios()
-				.post('/auth/register', {
-					username: username,
-					name: name,
-					email: email,
-					password: password,
-				})
-				.then((res) => {
+			const user_register = { name: username, email:email,password:password };
+			console.log(user_register)
+			fetch('http://localhost:8000/register',{
+				method: "POST", 
+    			//mode: "cors", // no-cors, *cors, same-origin
+    			cache: "no-cache",
+				headers: {
+					"accept": "application/json",
+					"Content-Type": "application/json",
+					'Access-Control-Allow-Origin': '*',
+					"withCredentials":"true"
+				},
+			
+				body: JSON.stringify(user_register) 
+			}).then((res) => {
+					console.log(res)
 					if (res.status === 200) {
-						navigate('/dash')
+						//window.location.replace('http://127.0.0.1:5173/Login')
 					} else {
 						setOpen(true)
 						setError(res.body)
 					}
-				})
-		} else {
-			if (username === '' || password === '') {
-				setOpen(true)
-				setError('Fill all the details')
-			}
+			})
+		
 
-			axios()
-				.post('/auth/login', {
-					username: username,
-					password: password,
-				})
-				.then((res) => {
-					if (res.data === 'Logged In') {
-						window.localStorage.setItem('username', username)
-						navigate('/dash')
-					} else {
-						setOpen(true)
-						setError(res.data)
-					}
-				})
+			// axios()
+			// 	.post('/auth/login', {
+			// 		username: username,
+			// 		password: password,
+			// 	})
+			// 	.then((res) => {
+			// 		if (res.data === 'Logged In') {
+			// 			window.localStorage.setItem('username', username)
+			// 			navigate('/dash')
+			// 		} else {
+			// 			setOpen(true)
+			// 			setError(res.data)
+			// 		}
+			// 	})
 		}
 	}
 
@@ -116,14 +124,12 @@ export default function Auth() {
 							</Grid>
 							{isSignUp && (
 								<>
-									<Input
-										name='Name'
-										label='First Name'
-										handleChange={(event) => setName(event.target.value)}
-										value={name}
-										half
-										autoFocus={true}
-									/>
+								<Input
+								name='username'
+								label='Username'
+								handleChange={(event) => setUsername(event.target.value)}
+								value={username}
+								/>	
 									<Input
 										name='email'
 										label='Email Address'
@@ -133,12 +139,7 @@ export default function Auth() {
 									/>
 								</>
 							)}
-							<Input
-								name='username'
-								label='Username'
-								handleChange={(event) => setUsername(event.target.value)}
-								value={username}
-							/>
+							
 							<Input
 								name='password'
 								label='Password'

@@ -1,18 +1,23 @@
 import mongoDB as db
 from fastapi import FastAPI, HTTPException, Request, status
+from fastapi.responses import JSONResponse
 import models.userModels as userModels
 import models.userWasteModels as userWasteModels
 from Hashing import Hash
 from fastapi.middleware.cors import CORSMiddleware
 from bson.objectid import ObjectId
-import datetime as date
+from datetime import datetime,timedelta
+
+app = FastAPI()
+
 origins = [
     "http://localhost:3000",
     "http://localhost:27017"
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+    "https://localhost",
+    "*"
 ]
-
-
-app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,18 +29,18 @@ app.add_middleware(
 
 # Testing
 @app.get('/')
-def index():
-    return 'hello'
+async def index():
+    return {"message": 'hello'}
 
 
 # POST /register
 @app.post('/register')
-def create_user(request: userModels.User):
+def create_user(request: userModels.User,status_code=200):
    #hashed_pass = Hash.bcrypt(request.password.encode())
    user_object = dict(request)
    #user_object["password"] = str(hashed_pass)
    user_id = db.userCollection.insert_one(user_object)
-   return {"message": "created"}
+   return {"message":"created","status":status_code}
 
 
 @app.post('/login')
@@ -55,6 +60,9 @@ def login(request: userModels.Login):
     print(user)
     id = str(user["_id"])
     return {"id": id, "email": user["email"], "password": user["password"]}
+    #response = JSONResponse(status_code=200, content=json_compatible_item_data)
+
+    # return {"message": "ok"}
 
 
 @app.post('/userWaste')
@@ -68,14 +76,16 @@ def postuserwaste(request: userWasteModels.UserWaste):
 
 @app.post('/userWaste/results')
 def getuserwaste(request: userWasteModels.UserWasteResults):
+    #request.d = datetime.strptime(request.d, '%Y-%m-%d')
     # user_id = db.userWasteCollection.find_one({"_id": request.user_id})
     # if not user_id:
     #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
     #                         detail=f'No user found with {request.user_id} user id')
     if request.interval == "weekly":
-        week_ago = request.date - date.timedelta(days=7)
+        now = datetime.now()
+        week_ago = now - timedelta(days=7)
 
-        userwasteresult = db.userWasteCollection.find({"date": {"$gte": week_ago, "$lt": request.date}})
+        userwasteresult = db.userWasteCollection.find({"date": {"$gte": week_ago, "$lt": now}})
         # print(userwasteresult)
         sumcardboard=0
         sumglass=0
@@ -87,22 +97,22 @@ def getuserwaste(request: userWasteModels.UserWasteResults):
             print(record)
             for key,val in record.items():
                 print(key,val)
-                if key== "cardboard":
-                    sumcardboard=sumcardboard+val
+                if key == "cardboard":
+                    sumcardboard = sumcardboard+val
                 elif key == "glass":
-                    sumglass=sumglass+val
+                    sumglass = sumglass+val
                 elif key == "metal":
-                    summetal=summetal+val
+                    summetal = summetal+val
                 elif key == "paper":
-                    sumpaper=sumpaper+val
+                    sumpaper = sumpaper+val
                 elif key == "plastic":
-                    sumplastic=sumplastic+val
+                    sumplastic = sumplastic+val
                 elif key == "trash":
-                    sumtrash=sumtrash+val
+                    sumtrash = sumtrash+val
         return {"sum_cardboard": sumcardboard,"sum_glass": sumglass,"sum_metal": summetal,"sum_paper": sumpaper,"sum_plastic":sumplastic,"sum_trash":sumtrash}
     elif request.interval == "daily":
 
-        userwasteresult = db.userWasteCollection.find({"date": request.date})
+        userwasteresult = db.userWasteCollection.find({"date": datetime.now()})
         sumcardboard=0
         sumglass=0
         summetal=0
@@ -127,19 +137,26 @@ def getuserwaste(request: userWasteModels.UserWasteResults):
                     sumtrash=sumtrash+val
         return {"sum_cardboard": sumcardboard,"sum_glass": sumglass,"sum_metal": summetal,"sum_paper": sumpaper,"sum_plastic":sumplastic,"sum_trash":sumtrash}
     elif request.interval == "weekly-daily":
-        week_ago = request.date - date.timedelta(days=7)
 
-        userwasteresult = db.userWasteCollection.find({"date": {"$gte": week_ago, "$lt": request.date}})
+        now = datetime.now()
+        week_ago = now - timedelta(days=7)
+        #print(week_ago)
+        #final_week_ago = week_ago.strftime("%Y-%m-%d")
+        #print(final_week_ago)
+        userwasteresult = db.userWasteCollection.find({"date": {"$gte": week_ago, "$lt": now}})
         result = []
+        print(userwasteresult)
         for record in userwasteresult:
-            #print(record)
+            print(record)
 
-            for key,val in record.items():
-                if key=="_id":
+            for key, val in record.items():
+                if key == "_id":
                     record["_id"] = str(record["_id"])
-            result.append(record)
+                   
 
+                result.append(record)
 
+        #print(result)
 
         return result
 
