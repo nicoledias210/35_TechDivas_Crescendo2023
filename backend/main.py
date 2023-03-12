@@ -7,6 +7,7 @@ from Hashing import Hash
 from fastapi.middleware.cors import CORSMiddleware
 from bson.objectid import ObjectId
 from datetime import datetime,timedelta
+from chatgpt_connection import get_recommendation
 
 app = FastAPI()
 
@@ -32,6 +33,12 @@ app.add_middleware(
 async def index():
     return {"message": 'hello'}
 
+
+# ChatGPT
+@app.get('/recommendation')
+async def chatgpt(category: str):
+    recommend = get_recommendation(category)
+    return {"recommendation": recommend}
 
 # POST /register
 @app.post('/register')
@@ -152,12 +159,7 @@ def getuserwaste(request: userWasteModels.UserWasteResults):
             for key, val in record.items():
                 if key == "_id":
                     record["_id"] = str(record["_id"])
-                   
-
                 result.append(record)
-
-        #print(result)
-
         return result
 
 
