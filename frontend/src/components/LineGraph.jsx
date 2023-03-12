@@ -1,5 +1,11 @@
+
 import React from 'react';
 import Navbar from "./Navbar/Navbar"
+import {useEffect,React} from 'react';
+import { Cookies } from 'react-cookie';
+import axios from 'axios';
+import moment from 'moment';
+
 import {
     LineChart,
     ResponsiveContainer,
@@ -10,75 +16,27 @@ import {
     CartesianGrid
 } from 'recharts';
 
-
-    const pdata = [
-        {
-            name: 'Day 1',
-            plastic: 11,
-            metal: 20,
-            trash: 50,
-            glass: 60,
-            paper: 65,
-            cardboard: 70
-        },
-        {
-            name: 'Day 2',
-            plastic: 5,
-            metal: 11,
-            trash: 44,
-            glass: 61,
-            paper: 50,
-            cardboard: 42
-        },
-        {
-            name: 'Day 3',
-            plastic: 7,
-            metal: 11,
-            trash: 47,
-            glass: 71,
-            paper: 60,
-            cardboard: 56
-
-        },
-        {
-            name: 'Day 4',
-            plastic: 6,
-            metal: 15,
-            trash: 11,
-            glass: 30,
-            paper: 40,
-            cardboard: 44
-        },
-        {
-            name: 'Day 5',
-            plastic: 12,
-            metal: 25,
-            trash: 20,
-            glass: 31,
-            paper: 25,
-            cardboard: 20
-        },
-        {
-            name: 'Day 6',
-            plastic: 5,
-            metal: 5,
-            trash: 24,
-            glass: 35,
-            paper: 30,
-            cardboard: 25
-        },
-        {
-            name: 'Day 7',
-            plastic: 11,
-            metal: 27,
-            trash: 22,
-            glass: 11,
-            paper: 20,
-            cardboard: 25
-        },
-    ];
-      
+    const pdata=[]
+   function getData(){
+        let res=[]
+        const temp= localStorage.getItem('userid')
+        //console.log(temp)
+        axios.post('http://127.0.0.1:8000/userWaste/results', {
+            user_id: temp,
+            interval:"weekly-daily"
+        })
+        .then( (response) =>{
+             console.log(response.data);
+        
+       
+        return res.data;
+        })
+    };
+    
+    //function getdata
     function LineGraph() {
+       
+        
         return (
 <div>
                 <h1 className="text-heading">
@@ -110,5 +68,4 @@ import {
         );
     }
 
-      
     export default LineGraph

@@ -1,128 +1,107 @@
-import React, { useState } from 'react';
-import { FileUploader } from "react-drag-drop-files";
+import React, { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import DownloadIcon from "@mui/icons-material/Download";
+import CircularProgress from "@mui/material/CircularProgress";
 
+import axios from "axios";
+import "./ImageUpload.css";
+import { auto } from "@popperjs/core";
+import Box from "@mui/material/Box";
 
+const thumbsContainer = {
+	marginTop: 135,
+	paddingLeft: auto,
+	paddingRight: auto,
+	height: "400px",
+	width: "400px",
+};
 
-const fileTypes = ["JPG", "PNG", "GIF"];
-function ImageUpload() {
-	const [file, setFile] = useState(null);
-	const handleChange = (file) => {
-	  setFile(file);
-	  };
-  return (
-	<div className="App">
-      <h1>Drag & Drop Your Files</h1>
-      <FileUploader
-        multiple={true}
-        handleChange={handleChange}
-        name="file"
-        types={fileTypes}
-      />
-      <p>{file ? `File name: ${file[0].name}` : "no files uploaded yet"}</p>
+const thumb = {
+	borderRadius: 2,
+	border: "1px solid #eaeaea",
+	padding: 4,
+	boxSizing: "border-box",
+};
 
-      
-    </div>
+const img = {
+	display: "block",
+	width: "640px",
+	marginLeft: "470px",
+	height: "500px",
+};
+
+const data = {
+	width: "auto",
+	marginLeft: "500px",
+	height: "500px",
+};
+
+function ImageUpload(props) {
+	const [files, setFiles] = useState([]);
+	const [image, setImage] = useState("");
+	const [fetch, setFetch] = useState(false);
+	const { getRootProps, getInputProps } = useDropzone({
+		accept: {
+			"image/*": [],
+		},
+		onDrop: (acceptedFiles) => {
+			setFetch(true);
+			setFiles(
+				acceptedFiles.map((file) => {
+					let data = new FormData();
+					data.append("file", file);
+
+					axios
+						.post("http://127.0.0.1:8800/yolo", data)
+						.then((res) => {
+							console.log(res);
+							setImage(res.data);
+							setFetch(false);
+						});
+				})
+			);
+		},
+	});
+
+	const dropboxStyle = {
+		marginTop: 135,
+		marginLeft: 25,
+		marginRight: 25,
+		width: "auto",
+		height: 300,
+		backgroundColor: "#eaeaea",
+	};
+
+	const thumbs = files.map((file) => (
+		<div key={file}>
+			{image !== "" ? (
+				<img src={`data:image/jpeg;base64,${image}`} style={img} />
+			) : null}
+		</div>
+	));
+
+	useEffect(() => {
+		return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+	}, []);
+
+	return image === "" ? (
+		<section className="container" style={dropboxStyle}>
+			<div {...getRootProps({ className: "dropzone" })}>
+				<input {...getInputProps()} />
+				<div
+					className="dragNDropbox"
+					style={{ marginTop: "50px", margin: "50px" }}
+				>
+					<p style={{ paddingTop: "8%", fontSize: "25px" }}>
+						<b>Choose files</b> or drag it here
+					</p>
+					{fetch ? <CircularProgress /> : <DownloadIcon />}
+				</div>
+			</div>
+		</section>
+	) : (
+		<div style={thumbsContainer}>{thumbs}</div>
 	);
-  
 }
 
-
-
-
-export default ImageUpload
-
-// import React, { useEffect, useState } from "react";
-// import { useDropzone } from "react-dropzone";
-// import DownloadIcon from "@mui/icons-material/Download";
-// import axios from "axios";
-
-// const thumbsContainer = {
-// 	display: "flex",
-// 	flexDirection: "row",
-// 	flexWrap: "wrap",
-// 	marginTop: 20,
-// };
-
-// const thumb = {
-// 	display: "inline-flex",
-// 	borderRadius: 2,
-// 	border: "1px solid #eaeaea",
-// 	padding: 4,
-// 	boxSizing: "border-box",
-// };
-
-// const thumbInner = {
-// 	display: "flex",
-// 	minWidth: 0,
-// 	overflow: "hidden",
-// };
-
-// const img = {
-// 	display: "block",
-// 	width: "auto",
-// 	height: "100%",
-// };
-
-// function ImageUpload(props) {
-// 	const [files, setFiles] = useState([]);
-// 	const [image, setImage] = useState("");
-// 	const { getRootProps, getInputProps } = useDropzone({
-// 		accept: {
-// 			"image/*": [],
-// 		},
-// 		onDrop: (acceptedFiles) => {
-// 			setFiles(
-// 				acceptedFiles.map((file) => {
-// 					let data = new FormData();
-// 					data.append("file", file);
-
-// 					axios
-// 						.post("http://127.0.0.1:8800/yolo", data)
-// 						.then((res) => {
-// 							console.log(res);
-// 							setImage(res.data);
-// 						});
-// 				})
-// 			);
-// 		},
-// 	});
-
-// 	const dropboxStyle = {
-// 		marginTop: 50,
-// 		width: "auto",
-// 		height: 300,
-// 		backgroundColor: "Grey",
-// 	};
-
-// 	const thumbs = files.map((file) => (
-// 		<div style={thumb} key={file}>
-// 			<div style={thumbInner}></div>
-// 			{image !== "" ? (
-// 				<img src={'C:\Users\Alisha\Documents\Projects\hackathon\35_TechDivas_Crescendo2023\frontend\src\assets\react.svg'} style={img} />
-// 			) : null}
-
-// 			/* <img src={image} alt="Random" /> */
-// 		</div>
-// 	));
-
-// 	useEffect(() => {
-// 		return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-// 	}, []);
-
-// 	return (
-// 		<section className="container" style={dropboxStyle}>
-// 			<div {...getRootProps({ className: "dropzone" })}>
-// 				<input {...getInputProps()} />
-// 				<div className="dragNDropbox" style={{ marginTop: "50" }}>
-// 					<p>
-// 						<b>Choose files</b> or drag it here
-// 					</p>
-// 					<DownloadIcon />
-// 				</div>
-// 			</div>
-// 			<aside style={thumbsContainer}>{thumbs}</aside>
-// 		</section>
-// 	);
-// }
-
-// export default ImageUpload;
+export default ImageUpload;

@@ -1,6 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from datetime import datetime
-
+from bson.objectid import ObjectId
 
 class UserWaste(BaseModel):
     user_id: str
@@ -15,5 +15,6 @@ class UserWaste(BaseModel):
 
 class UserWasteResults(BaseModel):
     user_id: str
-    date: datetime
     interval: str
+
+
