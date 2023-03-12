@@ -71,6 +71,8 @@ def postuserwaste(request: userWasteModels.UserWaste):
     if not user_id:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'No user found with {request.user_id} user id')
+    # request = dict(request)
+    # request.append("date",datetime.now())
     user_waste_id = db.userWasteCollection.insert_one(dict(request))
     return {"message": "created"}
 
@@ -85,7 +87,7 @@ def getuserwaste(request: userWasteModels.UserWasteResults):
         now = datetime.now()
         week_ago = now - timedelta(days=7)
 
-        userwasteresult = db.userWasteCollection.find({"date": {"$gte": week_ago, "$lt": now}})
+        userwasteresult = db.userWasteCollection.find({"date": {"$gte": week_ago, "$lt": now},"user_id":request.user_id})
         # print(userwasteresult)
         sumcardboard=0
         sumglass=0
@@ -140,25 +142,29 @@ def getuserwaste(request: userWasteModels.UserWasteResults):
 
         now = datetime.now()
         week_ago = now - timedelta(days=7)
-        #print(week_ago)
+        # print(week_ago)
         #final_week_ago = week_ago.strftime("%Y-%m-%d")
-        #print(final_week_ago)
-        userwasteresult = db.userWasteCollection.find({"date": {"$gte": week_ago, "$lt": now}})
+        userwasteresult = db.userWasteCollection.find({"user_id": "640ce560bde081cc0c636e52"}, {"_id": 0})
+        # return userwasteresult
+
         result = []
         print(userwasteresult)
         for record in userwasteresult:
             print(record)
-
-            for key, val in record.items():
-                if key == "_id":
-                    record["_id"] = str(record["_id"])
-                   
-
-                result.append(record)
-
-        #print(result)
-
+            result.append(record)
         return result
+        #print(result)
+        # def my_filtering_function(x):
+        #     wanted_key = request.user_id
+        #     if result["user_id"] != request.user_id:
+        #         return False
+        #     else:
+        #         return True
+        # for x in result:
+        #     filtered_result = dict(filter(my_filtering_function, x.items()))
+        #
+        # print(filtered_result)
+        # return result
 
 
 

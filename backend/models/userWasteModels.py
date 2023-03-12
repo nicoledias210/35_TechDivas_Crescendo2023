@@ -4,7 +4,6 @@ from bson.objectid import ObjectId
 
 class UserWaste(BaseModel):
     user_id: str
-    date: datetime
     cardboard: int
     glass: int
     metal: int
