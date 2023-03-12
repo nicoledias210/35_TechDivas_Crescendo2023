@@ -3,7 +3,9 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { Box } from '@mui/system';
 
 
+
 function CustomTooltip({ active, payload, label }) {
+ 
   
     if (active) {
        return (
@@ -21,10 +23,8 @@ function CustomTooltip({ active, payload, label }) {
  }}
 
 function Report() {
-   const [isActive, setActive] = useState("false");
-   const ToggleClass = () => {
-      setActive(!isActive); 
-     };
+  
+  
     const colours = ["#8884d8", "#82ca9d", "#FFBB28", "#FF8042", "#AF19FF"];
    const pieData = [
       {
@@ -53,7 +53,7 @@ function Report() {
 
   return (
    <Box sx={{ flexDirection: 'row' }}>
-    <div className = {isActive ? "active" : "null"}>
+    
    
     <div className = "piechart-weekly"> <PieChart width={730} height={300}>
     <Pie
@@ -77,7 +77,7 @@ function Report() {
     <Legend />
     </PieChart></div>
     
-    </div>
+    
     </Box>
   )
 }

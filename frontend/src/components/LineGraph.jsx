@@ -1,7 +1,11 @@
+
+import React from 'react';
+import Navbar from "./Navbar/Navbar"
 import {useEffect,React} from 'react';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
 import moment from 'moment';
+
 import {
     LineChart,
     ResponsiveContainer,
@@ -34,10 +38,10 @@ import {
        
         
         return (
-            <>
+<div>
                 <h1 className="text-heading">
-                    Weekly Analytics
-                </h1>
+                    Weekly Analytics</h1>
+                <Navbar/>
                 <ResponsiveContainer width="100%" aspect={3}>
                     <LineChart data={pdata} margin={{ right: 300 }}>
                         <CartesianGrid />
@@ -59,8 +63,8 @@ import {
                         <Line dataKey="cardboard"
                             stroke="yellow" activeDot={{ r: 8 }} />
                     </LineChart>
-                </ResponsiveContainer>
-            </>
+                </ResponsiveContainer>   
+                </div>
         );
     }
 

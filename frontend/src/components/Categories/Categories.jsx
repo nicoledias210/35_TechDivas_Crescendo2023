@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./Categories.module.css";
+import { useNavigate } from "react-router-dom";
+
 
 const categories = [
   {
@@ -10,17 +12,17 @@ const categories = [
   {
     name: "Plastic",
     image:
-      "https://www.thestatesman.com/wp-content/uploads/2019/03/plastic.jpg",
+    "https://www.thestatesman.com/wp-content/uploads/2019/03/plastic.jpg",
   },
   {
     name: "Paper",
     image:
-      "https://ichef.bbci.co.uk/news/976/cpsprodpb/552B/production/_105130812_img_1867.jpg",
+    "https://ichef.bbci.co.uk/news/976/cpsprodpb/552B/production/_105130812_img_1867.jpg",
   },
   {
     name: "Cardboard",
     image:
-      "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/newscms/2017_24/2041966/giant_pile.jpg",
+    "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/newscms/2017_24/2041966/giant_pile.jpg",
   },
   {
     name: "Glass",
@@ -29,11 +31,18 @@ const categories = [
   {
     name: "Trash",
     image:
-      "https://c4.wallpaperflare.com/wallpaper/96/479/785/pollution-trash-bags-waste-wallpaper-preview.jpg",
+    "https://c4.wallpaperflare.com/wallpaper/96/479/785/pollution-trash-bags-waste-wallpaper-preview.jpg",
   },
 ];
 
+const routeChange = (pathValue, navigate) =>{ 
+  let path = `Waste/${pathValue}`; 
+  navigate(path);
+  
+}
+
 const Categories = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles.container} id="categories">
       <div className={styles.mainText}>
@@ -52,6 +61,7 @@ const Categories = () => {
               style={{
                 backgroundImage: `url(${item.image})`,
               }}
+              onClick={() => routeChange(item.name, navigate)}
             >
               <div className={styles.categoryName}>{item.name}</div>
             </div>

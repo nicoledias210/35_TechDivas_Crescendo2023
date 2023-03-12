@@ -1,0 +1,16 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    width: 1000vw;
+    height: 150px;
+
+  }
+  label {
+    width: 350px;
+    box-sizing: border-box;
+  }
+  
